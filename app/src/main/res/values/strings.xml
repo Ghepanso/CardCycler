@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cards</string>
+    <string name="backstab">abc</string>
+    <string name="next">Next</string>
+    <string-array name="card_names">
+        <item>Osmin</item>
+        <item>iNetMin</item>
+    </string-array>
+</resources>
