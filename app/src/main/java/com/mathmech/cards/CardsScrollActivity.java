@@ -55,9 +55,6 @@ public class CardsScrollActivity extends AppCompatActivity {
                 finalCycler.setNextCard();
                 questionView.setText(finalCycler.currentCard.question);
             }
-            Log.i("CYKA", finalCycler.currentCard.question);
-            Log.i("CYKA", finalCycler.currentCard.name);
-            Log.i("CYKA", finalCycler.currentCard.tips[i[0]]);
         });
 
         showTipsButton.setOnClickListener(v -> {
