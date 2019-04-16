@@ -1,6 +1,7 @@
 package com.mathmech.cards;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         String[] cardNames = getResources().getStringArray(R.array.card_names);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, cardNames);
         listView.setAdapter(adapter);
+        stuff();
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -31,5 +36,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    void stuff()
+    {
+
+        //AssetUnpacker as = new AssetUnpacker();
+        //String[] s = as.shut("Packets");
+
+
+
+
+        String b = "";
     }
 }

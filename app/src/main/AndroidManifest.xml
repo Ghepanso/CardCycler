@@ -19,6 +19,7 @@
         <activity
             android:name=".CardsScrollActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".AssetUnpacker" />
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.security.KeyException;
+import java.util.ArrayList;
 
 public class CardsScrollActivity extends AppCompatActivity {
 
@@ -25,12 +26,16 @@ public class CardsScrollActivity extends AppCompatActivity {
         String theme = intent.getStringExtra("Cards name");
         themeView.setText(theme);
 
-        CardCycler cardCycler = new CardCycler();
+        CardCycler cardCycler = new CardCycler(getAssets());
         Cycler cycler = null;
-        try {
+        try
+        {
             Packet packet = cardCycler.getPacket("Osmin");
-            cycler = new Cycler(packet.getCards());
-        } catch (KeyException e) {
+            ArrayList<Card> cards = packet.getCards(cardCycler.unpacker);
+            cycler = new Cycler(cards);
+        }
+        catch (KeyException e)
+        {
             e.printStackTrace();
         }
 
