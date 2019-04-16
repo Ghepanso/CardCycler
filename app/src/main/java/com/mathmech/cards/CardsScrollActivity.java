@@ -3,9 +3,9 @@ package com.mathmech.cards;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.security.KeyException;
 import java.util.ArrayList;
@@ -58,9 +58,15 @@ public class CardsScrollActivity extends AppCompatActivity {
         });
 
         showTipsButton.setOnClickListener(v -> {
-            sb.append(finalCycler.currentCard.tips[i[0]] + '\n');
-            tipsView.setText(sb.toString());
-            i[0]++;
+            if (finalCycler.currentCard.tips.length > i[0]) {
+                sb.append(finalCycler.currentCard.tips[i[0]] + '\n');
+                tipsView.setText(sb.toString());
+                i[0]++;
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Подсказок больше нет", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         });
     }
 
