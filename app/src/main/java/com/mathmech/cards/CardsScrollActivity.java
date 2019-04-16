@@ -3,6 +3,7 @@ package com.mathmech.cards;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -48,12 +49,15 @@ public class CardsScrollActivity extends AppCompatActivity {
         final int[] i = {0};
         nextButton.setOnClickListener(v -> {
             if (finalCycler != null) {
-                questionView.setText(finalCycler.currentCard.question);
                 tipsView.setText("");
                 sb.delete(0, sb.length());
                 i[0] = 0;
                 finalCycler.setNextCard();
+                questionView.setText(finalCycler.currentCard.question);
             }
+            Log.i("CYKA", finalCycler.currentCard.question);
+            Log.i("CYKA", finalCycler.currentCard.name);
+            Log.i("CYKA", finalCycler.currentCard.tips[i[0]]);
         });
 
         showTipsButton.setOnClickListener(v -> {
