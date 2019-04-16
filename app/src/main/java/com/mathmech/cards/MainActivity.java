@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), CardsScrollActivity.class);
             intent.putExtra("Cards name", text);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_right, R.anim.slideback_left);
         });
     }
 }

@@ -44,7 +44,7 @@ public class CardsScrollActivity extends AppCompatActivity {
         }
 
         Cycler finalCycler = cycler;
-        questionView.setText(Objects.requireNonNull(finalCycler).currentCard.question);
+        questionView.setText(Objects.requireNonNull(finalCycler).currentCard.getQuestion());
 
         StringBuilder sb = new StringBuilder();
         final int[] i = {0};
@@ -53,12 +53,12 @@ public class CardsScrollActivity extends AppCompatActivity {
             sb.delete(0, sb.length());
             i[0] = 0;
             finalCycler.setNextCard();
-            questionView.setText(finalCycler.currentCard.question);
+            questionView.setText(finalCycler.currentCard.getQuestion());
         });
 
         showTipsButton.setOnClickListener(v -> {
-            if (finalCycler.currentCard.tips.length > i[0]) {
-                sb.append(finalCycler.currentCard.tips[i[0]]).append('\n');
+            if (finalCycler.currentCard.getTips().length > i[0]) {
+                sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
                 tipsView.setText(sb.toString());
                 i[0]++;
             } else {
@@ -67,5 +67,11 @@ public class CardsScrollActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.slide_left, R.anim.slideback_right);
     }
 }

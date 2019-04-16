@@ -37,10 +37,6 @@ public class AssetUnpacker {
         return new String[0];
     }
 
-    public static void println(Object... tokens) {
-        System.out.println(String.join(" ", Arrays.stream(tokens).map(Object::toString).collect(Collectors.toList())));
-    }
-
     private static String getLastNameInPath(String path) {
         int lastIndexOf = path.lastIndexOf(sep);
         if (lastIndexOf == -1) {
