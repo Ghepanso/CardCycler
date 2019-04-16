@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.security.KeyException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CardsScrollActivity extends AppCompatActivity {
     TextView tipsView;
@@ -43,23 +44,21 @@ public class CardsScrollActivity extends AppCompatActivity {
         }
 
         Cycler finalCycler = cycler;
-        questionView.setText(finalCycler.currentCard.question);
+        questionView.setText(Objects.requireNonNull(finalCycler).currentCard.question);
 
         StringBuilder sb = new StringBuilder();
         final int[] i = {0};
         nextButton.setOnClickListener(v -> {
-            if (finalCycler != null) {
-                tipsView.setText("");
-                sb.delete(0, sb.length());
-                i[0] = 0;
-                finalCycler.setNextCard();
-                questionView.setText(finalCycler.currentCard.question);
-            }
+            tipsView.setText("");
+            sb.delete(0, sb.length());
+            i[0] = 0;
+            finalCycler.setNextCard();
+            questionView.setText(finalCycler.currentCard.question);
         });
 
         showTipsButton.setOnClickListener(v -> {
             if (finalCycler.currentCard.tips.length > i[0]) {
-                sb.append(finalCycler.currentCard.tips[i[0]] + '\n');
+                sb.append(finalCycler.currentCard.tips[i[0]]).append('\n');
                 tipsView.setText(sb.toString());
                 i[0]++;
             } else {
@@ -69,6 +68,4 @@ public class CardsScrollActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

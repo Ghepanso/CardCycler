@@ -3,7 +3,7 @@ package com.mathmech.cards;
 import java.util.ArrayList;
 
 public class Node {
-    String name;
+    final String name;
     ArrayList<Node> incident = new ArrayList<>();
     ArrayList<Card> leaves;
 
@@ -14,9 +14,5 @@ public class Node {
     public String toString() {
         return name;
     }
-    //
-    public void check()
-    {
 
-    }
 }

@@ -11,7 +11,6 @@ public class CycleStack<T> {
     public CycleStack(Class<T[]> c, int size) {
         this.container = c.cast(Array.newInstance(c.getComponentType(), size));
         this.size = size;
-        // oh god java why you make me write that? --J
     }
 
     public void Push(T element) {

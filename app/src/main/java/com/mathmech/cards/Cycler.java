@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Cycler {
-    private ArrayList<Card> cards;
-    private CycleStack<Card> previous;
-    private Stack<Card> accumulatedStack = new Stack<>();
+    private final ArrayList<Card> cards;
+    private final CycleStack<Card> previous;
+    private final Stack<Card> accumulatedStack = new Stack<>();
     private final Choicer default_choicer;
     public Card currentCard = null;
 
