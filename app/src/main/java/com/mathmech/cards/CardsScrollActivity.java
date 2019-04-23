@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.RelativeLayout;
+import android.text.method.ScrollingMovementMethod;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +19,8 @@ public class CardsScrollActivity extends AppCompatActivity {
     TextView tipsView;
     TextView themeView;
     TextView questionView;
-    RelativeLayout swipeLayout;
+    LinearLayout swipeableView;
+    Animation fade;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -24,10 +28,11 @@ public class CardsScrollActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_scroll);
 
+        swipeableView = findViewById(R.id.swipeable);
         themeView = findViewById(R.id.cards_theme);
         tipsView = findViewById(R.id.tips);
         questionView = findViewById(R.id.question);
-        swipeLayout = findViewById(R.id.swipeable);
+        fade = AnimationUtils.loadAnimation(this, R.anim.fade);
 
         Intent intent = getIntent();
         String theme = intent.getStringExtra("Cards name");
@@ -48,10 +53,11 @@ public class CardsScrollActivity extends AppCompatActivity {
 
         StringBuilder sb = new StringBuilder();
         final int[] i = {0};
+        tipsView.setMovementMethod(new ScrollingMovementMethod());
 
-        swipeLayout.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
+        tipsView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
             @Override
-            public void onSwipeRight() {
+            public void onSwipeLeft() {
                 tipsView.setText("");
                 sb.delete(0, sb.length());
                 i[0] = 0;
@@ -60,7 +66,7 @@ public class CardsScrollActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwipeLeft() {
+            public void onSwipeRight() {
                 if (finalCycler.currentCard.getTips().length > i[0]) {
                     sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
                     tipsView.setText(sb.toString());
@@ -71,7 +77,33 @@ public class CardsScrollActivity extends AppCompatActivity {
                     toast.show();
                 }
             }
+        });
 
+        swipeableView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
+            @Override
+            public void onSwipeLeft() {
+                fade.reset();
+                questionView.clearAnimation();
+                questionView.startAnimation(fade);
+                tipsView.setText("");
+                sb.delete(0, sb.length());
+                i[0] = 0;
+                finalCycler.setNextCard();
+                questionView.setText(finalCycler.currentCard.getQuestion());
+            }
+
+            @Override
+            public void onSwipeRight() {
+                if (finalCycler.currentCard.getTips().length > i[0]) {
+                    sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
+                    tipsView.setText(sb.toString());
+                    i[0]++;
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Подсказок больше нет", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
         });
     }
 

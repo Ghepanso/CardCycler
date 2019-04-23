@@ -1,5 +1,6 @@
 package com.mathmech.cards;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     public void onSwipeRight() {
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public boolean onTouch(View v, MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
     }
@@ -28,6 +30,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         private static final int SWIPE_DISTANCE_THRESHOLD = 150;
         private static final int SWIPE_VELOCITY_THRESHOLD = 150;
 
+        @org.jetbrains.annotations.Contract(pure = true)
         @Override
         public boolean onDown(MotionEvent e) {
             return true;

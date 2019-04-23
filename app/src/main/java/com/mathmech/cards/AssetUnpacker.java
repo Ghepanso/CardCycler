@@ -5,11 +5,9 @@ import android.content.res.AssetManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 import developing.Config;
 
@@ -107,7 +105,14 @@ public class AssetUnpacker {
             for (int i = 0; i < tipsCount; i++) {
                 tips[i] = lines[i + 1].trim();
             }
-            return new Card(fileName, lines[0].trim(), tips);
+            ArrayList<String> tipsList = new ArrayList<>(); //TODO: delete array/list
+            for (int i = 0; i < tips.length; i++) {
+                if (tips[i].equals(""))
+                    continue;
+                else
+                    tipsList.add(tips[i]);
+            }
+            return new Card(fileName, lines[0].trim(), tipsList.toArray(new String[tipsList.size()]));
         } catch (IOException e) {
             e.printStackTrace();
         }
