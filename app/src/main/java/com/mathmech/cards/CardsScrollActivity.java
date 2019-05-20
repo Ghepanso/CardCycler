@@ -2,6 +2,7 @@ package com.mathmech.cards;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -11,21 +12,112 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.security.KeyException;
-import java.util.ArrayList;
-import java.util.Objects;
+//import com.mathmech.cards.old.Card;
+//import com.mathmech.cards.old.CardCycler;
+//import com.mathmech.cards.old.Cycler;
+//import com.mathmech.cards.old.Packet;
 
-public class CardsScrollActivity extends AppCompatActivity {
+import com.mathmech.cards.cycling.Card;
+import com.mathmech.cards.cycling.DefaultCycler;
+import com.mathmech.cards.cycling.DefaultHolder;
+import com.mathmech.cards.cycling.Packet;
+import com.mathmech.cards.cycling.interfaces.Cycler;
+import com.mathmech.cards.cycling.interfaces.Holder;
+
+import java.util.ArrayList;
+
+public class CardsScrollActivity extends AppCompatActivity
+{
     TextView tipsView;
     TextView themeView;
     TextView questionView;
     LinearLayout swipeableView;
     Animation fade;
 
+    Holder packetHolder;
+    Cycler currentCycler;
+
+    StringBuilder tipsBuilder;
+
+    // region Init cycling methods
+    void initHolder()
+    {
+        AssetManager manager = getAssets();
+        packetHolder = new DefaultHolder(manager);
+    }
+
+    void setCycler(String packetName)
+    {
+        Packet packet = packetHolder.getPacketByName(packetName);
+        ArrayList<Card> cards = packet.getCards();
+        currentCycler = new DefaultCycler(cards);
+    }
+    // endregion
+
+    // region Calls to Cycler
+    boolean isCyclerAlive()
+    {
+        //noinspection RedundantIfStatement TODO make exception in 'else'
+        if(currentCycler != null)
+            return true;
+        else
+            return false;
+    }
+
+    void updateQuestion()
+    {
+        if(isCyclerAlive())
+            questionView.setText(currentCycler.getQuestion());
+    }
+
+    void setNextCard()
+    {
+        if(isCyclerAlive())
+            currentCycler.setNextCard();
+    }
+    // endregion
+
+    // region Tips stuff
+    void flushTips()
+    {
+        tipsView.setText("");
+        tipsBuilder.setLength(0); //flush
+    }
+
+    void askForTip()
+    {
+        if (currentCycler.couldGiveTip())
+        {
+            String tip = currentCycler.askForTip();
+            appendTipToView(tip);
+        }
+        else tellNoMoreTips();
+    }
+
+    void appendTipToView(String tip)
+    {
+        tipsBuilder.append('\t');
+        tipsBuilder.append(tip);
+        tipsBuilder.append('\n');
+
+        tipsView.setText(tipsBuilder.toString());
+    }
+
+    void tellNoMoreTips()
+    {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Подсказок больше нет", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+    // endregion
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        // region Set views
         setContentView(R.layout.activity_cards_scroll);
 
         swipeableView = findViewById(R.id.swipeable);
@@ -37,78 +129,99 @@ public class CardsScrollActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String theme = intent.getStringExtra("Cards name");
         themeView.setText(theme);
+        // endregion
 
-        CardCycler cardCycler = new CardCycler(getAssets());
-        Cycler cycler = null;
-        try {
-            Packet packet = cardCycler.getPacket(theme);
-            ArrayList<Card> cards = packet.getCards(cardCycler.unpacker);
-            cycler = new Cycler(cards);
-        } catch (KeyException e) {
-            e.printStackTrace();
-        }
+        //CardCycler cardCycler = new CardCycler(getAssets());
+        //Cycler cycler = null;
+        //try
+        //{
+        //    Packet packet = cardCycler.getPacketByName(theme);
+        //    ArrayList<Card> cards = packet.getCards(cardCycler.unpacker);
+        //    cycler = new Cycler(cards);
+        //}
+        //catch (KeyException e)
+        //{
+        //    e.printStackTrace();
+        //}
+        initHolder();
+        setCycler(theme);
 
-        Cycler finalCycler = cycler;
-        questionView.setText(Objects.requireNonNull(finalCycler).currentCard.getQuestion());
+        tipsBuilder = new StringBuilder();
+        updateQuestion();
 
-        StringBuilder sb = new StringBuilder();
-        final int[] i = {0};
+        //questionView.setText(Objects.requireNonNull(finalCycler).currentCard.getQuestion());
+        //StringBuilder sb = new StringBuilder();
+        //final int[] i = {0};
+
+
+        //        tipsView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this)
+        //        {
+        //            @Override
+        //            public void onSwipeLeft()
+        //            {
+        //                flushTips();
+        //                setNextCard();
+        //                updateQuestion();
+        //                //sb.delete(0, sb.length());
+        //                //i[0] = 0;
+        //                //finalCycler.setNextCard();
+        //                //questionView.setText(finalCycler.currentCard.getQuestion());
+        //            }
+        //
+        //            @Override
+        //            public void onSwipeRight()
+        //            {
+        //                if (finalCycler.currentCard.getTips().length > i[0])
+        //                {
+        //                    sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
+        //                    tipsView.setText(sb.toString());
+        //                    i[0]++;
+        //                }
+        //                else
+        //                {
+        //                    tellNoMoreTips();
+        //                }
+        //            }
+        //        });
+
         tipsView.setMovementMethod(new ScrollingMovementMethod());
-
-        tipsView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
+        //region Init swiping
+        swipeableView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this)
+        {
             @Override
-            public void onSwipeLeft() {
-                tipsView.setText("");
-                sb.delete(0, sb.length());
-                i[0] = 0;
-                finalCycler.setNextCard();
-                questionView.setText(finalCycler.currentCard.getQuestion());
-            }
-
-            @Override
-            public void onSwipeRight() {
-                if (finalCycler.currentCard.getTips().length > i[0]) {
-                    sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
-                    tipsView.setText(sb.toString());
-                    i[0]++;
-                } else {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Подсказок больше нет", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-        });
-
-        swipeableView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
-            @Override
-            public void onSwipeLeft() {
+            public void onSwipeLeft()
+            {
                 fade.reset();
                 questionView.clearAnimation();
                 questionView.startAnimation(fade);
-                tipsView.setText("");
-                sb.delete(0, sb.length());
-                i[0] = 0;
-                finalCycler.setNextCard();
-                questionView.setText(finalCycler.currentCard.getQuestion());
+                flushTips();
+                setNextCard();
+                updateQuestion();
+                //tipsView.setText("");
+                //sb.delete(0, sb.length());
+                //i[0] = 0;
+                //finalCycler.setNextCard();
+                //questionView.setText(finalCycler.currentCard.getQuestion());
             }
 
             @Override
-            public void onSwipeRight() {
-                if (finalCycler.currentCard.getTips().length > i[0]) {
-                    sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
-                    tipsView.setText(sb.toString());
-                    i[0]++;
-                } else {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Подсказок больше нет", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+            public void onSwipeRight()
+            {
+                askForTip();
+                //{
+                //
+                //    Toast toast = Toast.makeText(getApplicationContext(),
+                //            "Подсказок больше нет", Toast.LENGTH_SHORT);
+                //    toast.show();
+                //}
             }
         });
+        //endregion
     }
 
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         overridePendingTransition(R.anim.slide_left, R.anim.slideback_right);
     }
