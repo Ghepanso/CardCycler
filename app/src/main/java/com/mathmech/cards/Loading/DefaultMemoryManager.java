@@ -10,12 +10,12 @@ public class DefaultMemoryManager implements MemoryManager
         return null;
     }
 
-    public ArrayList<Byte> readFile(String relativePathToFile, String fileName)
+    public byte[] readFile(String relativePathToFile, String fileName)
     {
         return null;
     }
 
-    public void writeFile(String relativePathToFile, String fileName, ArrayList<Byte> toWrite)
+    public void writeFile(String relativePathToFile, String fileName, byte[] toWrite)
     {
 
     }

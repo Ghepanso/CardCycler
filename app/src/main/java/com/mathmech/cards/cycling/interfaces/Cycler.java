@@ -2,9 +2,7 @@ package com.mathmech.cards.cycling.interfaces;
 
 public interface Cycler
 {
-    boolean couldGiveTip();
-    String askForTip();
+    String askForNextTip();
     String getQuestion();
-
     void setNextCard();
 }

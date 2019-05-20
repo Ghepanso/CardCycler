@@ -14,7 +14,7 @@ import java.util.Set;
 public class DefaultHolder implements Holder
 {
     //static final String defaultPacketFolderName = "Packets";
-    HashMap<String, Packet> packets;
+    private HashMap<String, Packet> packets;
 
     public DefaultHolder(AssetManager manager)
     {
@@ -23,41 +23,25 @@ public class DefaultHolder implements Holder
     }
 
     // region getPackets
-    public HashMap<String, Packet> getPackets(AssetManager manager)
+    private HashMap<String, Packet> getPackets(AssetManager manager)
     {
-        if (areAssetsExtracted())
-            return loadPacketsFromMemory();
-        else
-            return unitePacketMaps(
-                    loadPacketsFromAssets(manager),
-                    loadPacketsFromMemory()
-            );
+        exportAssetsIfNotExported(manager);
+        return loadPacketsFromMemory();
     }
 
-    public boolean areAssetsExtracted()
+    private void exportAssetsIfNotExported(AssetManager manager)
     {
-
-        return true; // TODO areAssetsExtracted
+        AssetUnpacker unpacker = new DefaultAssetUnpacker(manager);
+        if(!unpacker.arePacketsExported())
+            unpacker.exportPacketsToMemory();
     }
 
-    @SafeVarargs
-    public final HashMap<String, Packet> unitePacketMaps(HashMap<String, Packet>... maps)
-    {
-        return null;
-        // TODO unitePacketMaps
-    }
-
-    public HashMap<String, Packet> loadPacketsFromMemory()
+    private  HashMap<String, Packet> loadPacketsFromMemory()
     {
         Loader loader = new DefaultLoader();
         return loader.loadPacketsFromMemory();
     }
 
-    public HashMap<String, Packet> loadPacketsFromAssets(AssetManager manager)
-    {
-        AssetUnpacker unpacker = new DefaultAssetUnpacker(manager);
-        return unpacker.getPacketsFromAssets();
-    }
     // endregion
 
     public Set<String> getPacketNames()

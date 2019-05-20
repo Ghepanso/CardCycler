@@ -86,11 +86,8 @@ public class CardsScrollActivity extends AppCompatActivity
 
     void askForTip()
     {
-        if (currentCycler.couldGiveTip())
-        {
-            String tip = currentCycler.askForTip();
-            appendTipToView(tip);
-        }
+        String tip = currentCycler.askForNextTip();
+        if(tip != null) appendTipToView(tip);
         else tellNoMoreTips();
     }
 

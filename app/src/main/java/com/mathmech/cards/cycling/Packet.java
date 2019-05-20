@@ -4,11 +4,17 @@ import java.util.ArrayList;
 
 public class Packet
 {
-    //TODO PACKET
     public String name;
+    private ArrayList<Card> cards;
+
+    public Packet(String name, ArrayList<Card> cards)
+    {
+        this.name = name;
+        this.cards = cards;
+    }
+
     public ArrayList<Card> getCards()
     {
-        return null;
-
+        return cards;
     }
 }
