@@ -3,6 +3,7 @@ package com.mathmech.cards;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.animation.Animation;
@@ -60,6 +61,7 @@ public class CardsScrollActivity extends AppCompatActivity {
                 fade.reset();
                 questionView.clearAnimation();
                 questionView.startAnimation(fade);
+                TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
                 tipsView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 tipsView.setText("");
                 sb.delete(0, sb.length());
@@ -70,6 +72,7 @@ public class CardsScrollActivity extends AppCompatActivity {
 
             @Override
             public void onSwipeRight() {
+                TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
                 if (finalCycler.currentCard.getTips().length > i[0]) {
                     sb.append("\t\t");
                     sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
