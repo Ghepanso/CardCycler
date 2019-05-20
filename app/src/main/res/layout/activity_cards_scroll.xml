@@ -34,9 +34,9 @@
             android:id="@+id/tips"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:duplicateParentState="true"
             android:gravity="center_vertical"
             android:scrollbars="vertical" />
     </LinearLayout>
-
 
 </LinearLayout>

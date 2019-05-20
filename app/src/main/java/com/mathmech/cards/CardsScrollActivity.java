@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -53,31 +52,6 @@ public class CardsScrollActivity extends AppCompatActivity {
 
         StringBuilder sb = new StringBuilder();
         final int[] i = {0};
-        tipsView.setMovementMethod(new ScrollingMovementMethod());
-
-        tipsView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
-            @Override
-            public void onSwipeLeft() {
-                tipsView.setText("");
-                sb.delete(0, sb.length());
-                i[0] = 0;
-                finalCycler.setNextCard();
-                questionView.setText(finalCycler.currentCard.getQuestion());
-            }
-
-            @Override
-            public void onSwipeRight() {
-                if (finalCycler.currentCard.getTips().length > i[0]) {
-                    sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
-                    tipsView.setText(sb.toString());
-                    i[0]++;
-                } else {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Подсказок больше нет", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-        });
 
         swipeableView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
             @Override
@@ -95,6 +69,7 @@ public class CardsScrollActivity extends AppCompatActivity {
             @Override
             public void onSwipeRight() {
                 if (finalCycler.currentCard.getTips().length > i[0]) {
+                    sb.append('\t');
                     sb.append(finalCycler.currentCard.getTips()[i[0]]).append('\n');
                     tipsView.setText(sb.toString());
                     i[0]++;
