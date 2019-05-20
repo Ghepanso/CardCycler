@@ -17,7 +17,7 @@ public class Reader {
 
 
     static final int checkSumLen = 6;
-    static final String packetFolderName = "Packets";
+    static final String packetFolderName = "Packets_old";
     static final String sep = File.separator;
     static final String configNameExt = ".pck";
 

@@ -1,4 +1,4 @@
-package com.mathmech.cards;
+package com.mathmech.cards.old;
 
 import android.content.res.AssetManager;
 
@@ -6,26 +6,32 @@ import java.security.KeyException;
 import java.util.HashMap;
 import java.util.Set;
 
-public class CardCycler {
-
-    static final String defaultPacketFolderName = "Packets";
+public class CardCycler
+{
+    static final String defaultPacketFolderName = "Packets_old";
     private final HashMap<String, Packet> packets;
     public final AssetUnpacker unpacker;
 
-    public CardCycler(AssetManager manager) {
+    public CardCycler(AssetManager manager)
+    {
         unpacker = new AssetUnpacker(manager);
         packets = unpacker.extractPackets(defaultPacketFolderName);
     }
 
-    public Packet getPacket(String key) throws KeyException {
-        if (packets.containsKey(key)) {
+    public Packet getPacket(String key) throws KeyException
+    {
+        if (packets.containsKey(key))
+        {
             return packets.get(key);
-        } else {
+        }
+        else
+        {
             throw new KeyException();
         }
     }
 
-    public Set<String> getKeys() {
+    public Set<String> getKeys()
+    {
         return packets.keySet();
     }
 }
