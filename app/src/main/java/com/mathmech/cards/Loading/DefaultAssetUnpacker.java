@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import com.mathmech.cards.Loading.interfaces.AssetUnpacker;
 import com.mathmech.cards.Loading.interfaces.MemoryManager;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -11,7 +12,7 @@ public class DefaultAssetUnpacker implements AssetUnpacker
 {
     final String defaultAssetsFolder = "Packets";
     final String packetExtension = ".pkt";
-    final String pathSep = "\\";
+    final String pathSep = File.separator;
     private AssetManager manager;
 
 

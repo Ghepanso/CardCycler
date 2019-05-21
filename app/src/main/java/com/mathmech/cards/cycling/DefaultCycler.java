@@ -16,7 +16,7 @@ public class DefaultCycler implements Cycler
     public DefaultCycler(ArrayList<Card> cards, Choicer choicer)
     {
         allCards = cards;
-        int cardsCount = cards.size();
+        cardsCount = cards.size();
         this.choicer = choicer;
     }
     public DefaultCycler(ArrayList<Card> cards)
@@ -33,7 +33,7 @@ public class DefaultCycler implements Cycler
     public String askForNextTip()
     {
         if(tipsGiven < currentCard.getTipsLength())
-            return currentCard.getTip(tipsGiven++);
+            return currentCard.getTip(++tipsGiven);
         else return null; // TODO: throw ex instead
     }
 

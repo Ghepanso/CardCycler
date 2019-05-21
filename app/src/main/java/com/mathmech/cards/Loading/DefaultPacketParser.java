@@ -26,8 +26,10 @@ public class DefaultPacketParser implements PacketParser
     private int readInt(int bytesToRead)
     {
         int result = 0;
-        for (int i = 0; i < bytesToRead; i++)
-            result += stream.read() << (8 * (bytesToRead-i));
+        for (int i = 0; i < bytesToRead; i++) {
+            int a = stream.read();
+            result += a << (8 * (bytesToRead - i - 1));
+        }
         return result;
     }
 

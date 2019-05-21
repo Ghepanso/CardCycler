@@ -52,6 +52,7 @@ public class DefaultHolder implements Holder
 
     public Packet getPacketByName(String name)
     {
+        name += ".pkt";
         if(packets.containsKey(name))
             return packets.get(name);
         else return null; //TODO throw exception
