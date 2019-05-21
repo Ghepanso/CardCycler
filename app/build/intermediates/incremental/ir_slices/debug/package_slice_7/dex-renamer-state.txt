@@ -1,4 +1,4 @@
-#Tue May 21 19:33:03 YEKT 2019
+#Tue May 21 20:50:50 YEKT 2019
 base.0=C\:\\Users\\matvey\\git\\Cards\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\7
 path.0=classes.dex
 renamed.0=classes.dex

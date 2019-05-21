@@ -4,9 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -20,16 +21,16 @@ import com.mathmech.cards.cycling.interfaces.Cycler;
 import com.mathmech.cards.cycling.interfaces.Holder;
 
 public class CardsScrollActivity extends AppCompatActivity {
-    TextView tipsView;
-    TextView themeView;
-    TextView questionView;
-    LinearLayout swipeableView;
-    Animation fade;
+    private TextView tipsView;
+    private TextView themeView;
+    private TextView questionView;
+    private LinearLayout swipeableView;
+    private Animation fade;
 
-    Holder packetHolder;
-    Cycler currentCycler;
+    private Holder packetHolder;
+    private Cycler currentCycler;
 
-    StringBuilder tipsBuilder;
+    private StringBuilder tipsBuilder;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -63,6 +64,9 @@ public class CardsScrollActivity extends AppCompatActivity {
                 flushTips();
                 setNextCard();
                 updateQuestion();
+                TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
+                tipsView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                tipsView.setText("");
             }
 
             @Override
@@ -78,52 +82,50 @@ public class CardsScrollActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_left, R.anim.slideback_right);
     }
 
-    void askForTip() {
-        //TODO: extremly important. Check if tip is empty!!! -Jenya eto tebe
+    private void askForTip() {
         String tip = currentCycler.askForNextTip();
-
         if (tip != null) appendTipToView(tip);
         else tellNoMoreTips();
     }
 
-    void appendTipToView(String tip) {
+    private void appendTipToView(String tip) {
         tipsBuilder.append('\t');
         tipsBuilder.append(tip);
         tipsBuilder.append('\n');
         tipsView.setText(tipsBuilder.toString());
     }
 
-    void tellNoMoreTips() {
+    private void tellNoMoreTips() {
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Подсказок больше нет", Toast.LENGTH_SHORT);
         toast.show();
     }
 
-    void initHolder() {
+    private void initHolder() {
         AssetManager manager = getAssets();
         packetHolder = new DefaultHolder(manager);
     }
 
-    void initCycler(String packetName) {
+    private void initCycler(String packetName) {
         Packet packet = packetHolder.getPacketByName(packetName);
         currentCycler = new DefaultCycler(packet.getCards());
     }
 
-    boolean cyclerIsNull() {
+    private boolean cyclerIsNull() {
         return currentCycler == null;
     }
 
-    void flushTips() {
+    private void flushTips() {
         tipsView.setText("");
-        tipsBuilder.setLength(0); //flush
+        tipsBuilder.setLength(0);
     }
 
-    void updateQuestion() {
+    private void updateQuestion() {
         if (!cyclerIsNull())
             questionView.setText(currentCycler.getQuestion());
     }
 
-    void setNextCard() {
+    private void setNextCard() {
         if (!cyclerIsNull())
             currentCycler.setNextCard();
     }

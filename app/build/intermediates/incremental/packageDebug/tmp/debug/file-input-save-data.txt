@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue May 21 16:54:34 YEKT 2019
+#Tue May 21 19:50:55 YEKT 2019
 56.path=Packets_old/Osmin/Commands/Cmd/dir.txt
 5.base=C\:\\Users\\matvey\\git\\Cards\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 42.base=C\:\\Users\\matvey\\git\\Cards\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out

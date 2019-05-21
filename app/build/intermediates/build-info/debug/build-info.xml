@@ -5,47 +5,53 @@
     build-mode="COLD"
     density="560dpi"
     format="10"
-    ir-eligibility="COMPATIBLE"
+    ir-eligibility="FIELD_TYPE_CHANGE"
     plugin-version="3.3.2"
-    timestamp="1558449514884"
+    timestamp="1558453848721"
     token="-2658184939655398271"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="2047" />
+        duration="407" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="35" />
+        duration="56" />
     <task
         name="verifier"
-        duration="12" />
+        duration="21" />
 
     <artifact
+        location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
+        type="SPLIT" />
+    <artifact
         location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
         type="SPLIT" />
 
     <build
         build-mode="FULL"
-        timestamp="1558441220359"
+        timestamp="1558451236515"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
-            type="SPLIT" />
-        <artifact
             location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
+            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
+            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\matvey\git\Cards\app\build\intermediates\resources\instant-run\debug\resources-debug.apk"
@@ -74,38 +80,17 @@
     </build>
     <build
         build-mode="COLD"
-        ir-eligibility="COMPATIBLE"
-        timestamp="1558442454404"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
-            type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        ir-eligibility="METHOD_DELETED"
-        timestamp="1558448943332"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
-            type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        ir-eligibility="COMPATIBLE"
-        timestamp="1558449182659"
+        ir-eligibility="FIELD_TYPE_CHANGE"
+        timestamp="1558453848721"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
             type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        ir-eligibility="COMPATIBLE"
-        timestamp="1558449514884"
-        verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\matvey\git\Cards\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
             type="SPLIT" />
     </build>
 

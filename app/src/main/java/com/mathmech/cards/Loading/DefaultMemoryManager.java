@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO MEMORY MANAGER
 public class DefaultMemoryManager implements MemoryManager {
-    public List<String> listDirectory(String relativePathToDir) {
-        File file = new File("data/data/com.mathmech.cards" + File.separatorChar + relativePathToDir);
-        ArrayList<String> files = new ArrayList<>();
 
-        File[] a = file.listFiles();
+    private final String defaultPath = "data/data/com.mathmech.cards";
+
+    public List<String> listDirectory(String relativePathToDir) {
+        File file = new File(defaultPath + File.separatorChar + relativePathToDir);
+        ArrayList<String> files = new ArrayList<>();
         for (File inFile : file.listFiles()) {
             files.add(inFile.getName());
         }
@@ -24,14 +24,13 @@ public class DefaultMemoryManager implements MemoryManager {
     }
 
     public byte[] readFile(String relativePathToFile, String fileName) {
-        File folder = new File("data/data/com.mathmech.cards" + File.separatorChar + relativePathToFile);
+        File folder = new File(defaultPath + File.separatorChar + relativePathToFile);
         File file = new File(folder.getAbsolutePath() + File.separatorChar + fileName);
         byte[] readBytes = new byte[(int) file.length()];
         try {
-            FileInputStream buf = new FileInputStream(file);
-            //BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
-            buf.read(readBytes, 0, (int) file.length());
-            buf.close();
+            FileInputStream stream = new FileInputStream(file);
+            stream.read(readBytes, 0, (int) file.length());
+            stream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -41,11 +40,10 @@ public class DefaultMemoryManager implements MemoryManager {
     }
 
     public void writeFile(String relativePathToFile, String fileName, byte[] toWrite) {
-        File folder = new File("data/data/com.mathmech.cards" + File.separatorChar + relativePathToFile);
+        File folder = new File(defaultPath + File.separatorChar + relativePathToFile);
         File file = new File(folder.getAbsoluteFile().toString() + File.separatorChar + fileName);
         if (!folder.exists())
             folder.mkdir();
-        boolean state = folder.exists();
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -53,12 +51,11 @@ public class DefaultMemoryManager implements MemoryManager {
                 e.printStackTrace();
             }
         }
-
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(toWrite);
-            fos.flush();
-            fos.close();
+            FileOutputStream stream = new FileOutputStream(file);
+            stream.write(toWrite);
+            stream.flush();
+            stream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

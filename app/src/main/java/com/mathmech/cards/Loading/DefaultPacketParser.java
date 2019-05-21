@@ -8,23 +8,20 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class DefaultPacketParser implements PacketParser
-{
+public class DefaultPacketParser implements PacketParser {
     final int decoder_version = 1; //TODO throw ex if reads another
 
-    final int CARDS_COUNT_BYTES = 3;
-    final int CARD_FRAME_LEN_BYTES = 5;
-    final int VERSION_BYTES = 2;
-    final int NAME_LEN_BYTES = 2;
-    final int QUEST_LEN_BYTES = 2;
-    final int TIPS_COUNT_BYTES = 2;
-    final int TIP_LEN_COUNT = 3;
+    private final int CARDS_COUNT_BYTES = 3;
+    private final int CARD_FRAME_LEN_BYTES = 5;
+    private final int VERSION_BYTES = 2;
+    private final int NAME_LEN_BYTES = 2;
+    private final int QUEST_LEN_BYTES = 2;
+    private final int TIPS_COUNT_BYTES = 2;
+    private final int TIP_LEN_COUNT = 3;
 
     private ByteArrayInputStream stream;
 
-    // region Read methods
-    private int readInt(int bytesToRead)
-    {
+    private int readInt(int bytesToRead) {
         int result = 0;
         for (int i = 0; i < bytesToRead; i++) {
             int a = stream.read();
@@ -33,19 +30,16 @@ public class DefaultPacketParser implements PacketParser
         return result;
     }
 
-    private String readString(int length)
-    {
+    private String readString(int length) {
         // Actually extremely bad crutch --Jarl
         byte[] buffer = new byte[length];
-        for (int i = 0; i < length; i++)
-        {
-            buffer[i] = (byte)stream.read();
+        for (int i = 0; i < length; i++) {
+            buffer[i] = (byte) stream.read();
         }
         return new String(buffer, StandardCharsets.UTF_8);
     }
 
-    private Card readCard()
-    {
+    private Card readCard() {
         int nameLen = readInt(NAME_LEN_BYTES);
         int questionLen = readInt(QUEST_LEN_BYTES);
         int tipsCount = readInt(TIPS_COUNT_BYTES);
@@ -61,15 +55,10 @@ public class DefaultPacketParser implements PacketParser
 
         return new Card(name, question, tips);
     }
-    // endregion
 
-    private ArrayList<Card> compile()
-    {
+    private ArrayList<Card> compile() {
         int version = readInt(VERSION_BYTES);
         int cardCount = readInt(CARDS_COUNT_BYTES);
-        //int[] framesLengths = new int[cardCount];
-        //for (int i = 0; i < cardCount; i++)
-        //    framesLengths[i] = readInt(CARD_FRAME_LEN_BYTES);
         long ignoredFrameLengthInfo = stream.skip(cardCount * CARD_FRAME_LEN_BYTES);
 
         ArrayList<Card> result = new ArrayList<>();
@@ -78,8 +67,7 @@ public class DefaultPacketParser implements PacketParser
         return result;
     }
 
-    public Packet parsePacketFromBytes(String packetName, byte[] bytes)
-    {
+    public Packet parsePacketFromBytes(String packetName, byte[] bytes) {
         stream = new ByteArrayInputStream(bytes);
         return new Packet(packetName, compile());
     }
