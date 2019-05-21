@@ -24,7 +24,7 @@ public class DefaultMemoryManager implements MemoryManager {
         return files;
     }
 
-    public List<Byte> readFile(String relativePathToFile, String fileName) {
+    public byte[] readFile(String relativePathToFile, String fileName) {
         File file = new File(relativePathToFile + fileName);
         byte[] readBytes = new byte[(int) file.length()];
         try {
@@ -36,27 +36,31 @@ public class DefaultMemoryManager implements MemoryManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        LinkedList<Byte> bytes = new LinkedList<>();
-        for (int i = 0; i < readBytes.length; i++) {
-            bytes.add(readBytes[i]);
-        }
-        return bytes;
+        //LinkedList<Byte> bytes = new LinkedList<>();
+        //for (int i = 0; i < readBytes.length; i++) {
+        //    bytes.add(readBytes[i]);
+        //}
+        return readBytes;
     }
 
-    public void writeFile(String relativePathToFile, String fileName, List<Byte> toWrite) {
+    public void writeFile(String relativePathToFile, String fileName, byte[] toWrite)
+    {
         File file = new File(relativePathToFile + fileName);
-        byte[] bytes = new byte[toWrite.size()];
-        for (int i = 0; i < toWrite.size(); i++) {
-            bytes[i] = (byte) toWrite.get(i);
-        }
-        try {
+        byte[] bytes = new byte[toWrite.length];
+        System.arraycopy(toWrite, 0, bytes, 0, toWrite.length);
+        try
+        {
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
-            bufferedOutputStream.write(bytes, 0, toWrite.size());
+            bufferedOutputStream.write(bytes, 0, toWrite.length);
             bufferedOutputStream.flush();
             bufferedOutputStream.close();
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e)
+        {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
