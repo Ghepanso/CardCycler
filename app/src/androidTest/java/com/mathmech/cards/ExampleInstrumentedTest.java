@@ -23,4 +23,10 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.mathmech.cards", appContext.getPackageName());
     }
+
+    @Test
+    public void asd(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+    }
 }

@@ -3,17 +3,17 @@ package com.mathmech.cards.cycling;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 
+import com.mathmech.cards.cycling.interfaces.Holder;
 import com.mathmech.cards.loading.DefaultAssetUnpacker;
 import com.mathmech.cards.loading.DefaultLoader;
 import com.mathmech.cards.loading.interfaces.AssetUnpacker;
 import com.mathmech.cards.loading.interfaces.Loader;
-import com.mathmech.cards.cycling.interfaces.Holder;
 
 import java.util.HashMap;
 import java.util.Set;
 
 public class DefaultHolder implements Holder {
-    private HashMap<String, Packet> packets;
+    private final HashMap<String, Packet> packets;
 
     public DefaultHolder(AssetManager manager) {
         packets = getPackets(manager);

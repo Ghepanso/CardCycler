@@ -1,7 +1,5 @@
 package com.mathmech.cards.cycling;
 
-import android.support.annotation.RequiresApi;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,29 +14,25 @@ public class Card {
         this.tips = fixTips(tips);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getQuestion() {
+    String getQuestion() {
         return question;
     }
 
-    public int getTipsLength() {
+    int getTipsLength() {
         return tips.length;
     }
 
     private String[] fixTips(String[] strings) {
         List<String> res = new LinkedList<>();
         for (String string : strings) {
-            if (!string.equals(""))
+            if (!string.equals("") && !string.trim().equals(""))
                 res.add(string);
         }
         return res.toArray(new String[0]);
     }
 
-    public String getTip(int index) {
-        if (index > 0 && index < tips.length)
+    String getTip(int index) {
+        if (index >= 0 && index < tips.length)
             return tips[index];
         else {
             return null;

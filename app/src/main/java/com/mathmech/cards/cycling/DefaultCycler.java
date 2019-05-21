@@ -23,12 +23,15 @@ public class DefaultCycler implements Cycler {
     }
 
     public String getQuestion() {
-        return currentCard.getQuestion();
+        if (currentCard != null)
+            return currentCard.getQuestion();
+        else
+            return null;
     }
 
     public String askForNextTip() {
         if (tipsGiven < currentCard.getTipsLength())
-            return currentCard.getTip(++tipsGiven);
+            return currentCard.getTip(tipsGiven++);
         else return null;
     }
 
