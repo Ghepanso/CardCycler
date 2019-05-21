@@ -1,4 +1,4 @@
-package com.mathmech.cards;
+package com.mathmech.cards.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,11 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mathmech.cards.R;
 import com.mathmech.cards.cycling.DefaultCycler;
 import com.mathmech.cards.cycling.DefaultHolder;
 import com.mathmech.cards.cycling.Packet;
 import com.mathmech.cards.cycling.interfaces.Cycler;
 import com.mathmech.cards.cycling.interfaces.Holder;
+import com.mathmech.cards.ui.utils.OnSwipeTouchListener;
 
 public class CardsScrollActivity extends AppCompatActivity {
     private TextView tipsView;
@@ -54,7 +55,6 @@ public class CardsScrollActivity extends AppCompatActivity {
         tipsBuilder = new StringBuilder();
         updateQuestion();
 
-        tipsView.setMovementMethod(new ScrollingMovementMethod());
         swipeableView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
             @Override
             public void onSwipeLeft() {
@@ -64,9 +64,7 @@ public class CardsScrollActivity extends AppCompatActivity {
                 flushTips();
                 setNextCard();
                 updateQuestion();
-                TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
-                tipsView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                tipsView.setText("");
+                resetSize();
             }
 
             @Override
@@ -80,6 +78,12 @@ public class CardsScrollActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.slide_left, R.anim.slideback_right);
+    }
+
+    private void resetSize() {
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
+        tipsView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
     }
 
     private void askForTip() {

@@ -1,6 +1,6 @@
-package com.mathmech.cards.Loading;
+package com.mathmech.cards.loading;
 
-import com.mathmech.cards.Loading.interfaces.MemoryManager;
+import com.mathmech.cards.loading.interfaces.MemoryManager;
 
 import java.io.File;
 import java.io.FileInputStream;

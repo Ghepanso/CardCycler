@@ -1,6 +1,6 @@
-package com.mathmech.cards.Loading;
+package com.mathmech.cards.loading;
 
-import com.mathmech.cards.Loading.interfaces.PacketParser;
+import com.mathmech.cards.loading.interfaces.PacketParser;
 import com.mathmech.cards.cycling.Card;
 import com.mathmech.cards.cycling.Packet;
 

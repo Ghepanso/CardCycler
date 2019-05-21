@@ -1,4 +1,4 @@
-package com.mathmech.cards;
+package com.mathmech.cards.ui.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-class OnSwipeTouchListener implements View.OnTouchListener {
+public class OnSwipeTouchListener implements View.OnTouchListener {
 
     private final GestureDetector gestureDetector;
 
@@ -14,10 +14,10 @@ class OnSwipeTouchListener implements View.OnTouchListener {
         gestureDetector = new GestureDetector(context, new GestureListener());
     }
 
-    void onSwipeLeft() {
+    public void onSwipeLeft() {
     }
 
-    void onSwipeRight() {
+    public void onSwipeRight() {
     }
 
     @SuppressLint("ClickableViewAccessibility")

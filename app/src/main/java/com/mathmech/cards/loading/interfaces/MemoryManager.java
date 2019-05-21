@@ -1,4 +1,4 @@
-package com.mathmech.cards.Loading.interfaces;
+package com.mathmech.cards.loading.interfaces;
 
 import java.util.List;
 

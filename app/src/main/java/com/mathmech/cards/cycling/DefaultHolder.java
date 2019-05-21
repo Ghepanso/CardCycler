@@ -3,10 +3,10 @@ package com.mathmech.cards.cycling;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 
-import com.mathmech.cards.Loading.DefaultAssetUnpacker;
-import com.mathmech.cards.Loading.DefaultLoader;
-import com.mathmech.cards.Loading.interfaces.AssetUnpacker;
-import com.mathmech.cards.Loading.interfaces.Loader;
+import com.mathmech.cards.loading.DefaultAssetUnpacker;
+import com.mathmech.cards.loading.DefaultLoader;
+import com.mathmech.cards.loading.interfaces.AssetUnpacker;
+import com.mathmech.cards.loading.interfaces.Loader;
 import com.mathmech.cards.cycling.interfaces.Holder;
 
 import java.util.HashMap;

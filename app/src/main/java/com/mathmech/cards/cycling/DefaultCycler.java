@@ -35,5 +35,6 @@ public class DefaultCycler implements Cycler {
     public void setNextCard() {
         int nextCardIndex = choicer.nextIndex(cardsCount);
         currentCard = allCards.get(nextCardIndex);
+        tipsGiven = 0;
     }
 }

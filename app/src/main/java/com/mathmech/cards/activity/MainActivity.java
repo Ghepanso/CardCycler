@@ -1,4 +1,4 @@
-package com.mathmech.cards;
+package com.mathmech.cards.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.mathmech.cards.R;
 
 public class MainActivity extends AppCompatActivity {
 

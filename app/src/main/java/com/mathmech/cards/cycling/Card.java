@@ -38,10 +38,10 @@ public class Card {
     }
 
     public String getTip(int index) {
-        if (index > 0 && index < tips.length - 1)
+        if (index > 0 && index < tips.length)
             return tips[index];
         else {
-            throw new NullPointerException("no more tips");
+            return null;
         }
     }
 }
