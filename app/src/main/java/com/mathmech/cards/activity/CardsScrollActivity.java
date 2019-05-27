@@ -4,14 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.mathmech.cards.R;
 import com.mathmech.cards.cycling.DefaultCycler;
@@ -27,11 +31,10 @@ public class CardsScrollActivity extends AppCompatActivity {
     private TextView questionView;
     private LinearLayout swipeableView;
     private Animation fade;
+    private CardView cardView;
 
     private Holder packetHolder;
     private Cycler currentCycler;
-
-    private StringBuilder tipsBuilder;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -44,6 +47,7 @@ public class CardsScrollActivity extends AppCompatActivity {
         tipsView = findViewById(R.id.tips);
         questionView = findViewById(R.id.question);
         fade = AnimationUtils.loadAnimation(this, R.anim.fade);
+        cardView = findViewById(R.id.card_view);
 
         Intent intent = getIntent();
         String theme = intent.getStringExtra("Cards name");
@@ -52,23 +56,24 @@ public class CardsScrollActivity extends AppCompatActivity {
         initHolder();
         initCycler(theme);
         setNextCard();
-        tipsBuilder = new StringBuilder();
+        //tipsBuilder = new StringBuilder();
         updateQuestion();
-
+        cardView.setVisibility(View.GONE);
         swipeableView.setOnTouchListener(new OnSwipeTouchListener(CardsScrollActivity.this) {
             @Override
             public void onSwipeLeft() {
                 fade.reset();
                 questionView.clearAnimation();
                 questionView.startAnimation(fade);
+                cardView.setVisibility(View.GONE);
                 flushTips();
                 setNextCard();
                 updateQuestion();
-                resetSize();
             }
 
             @Override
             public void onSwipeRight() {
+                cardView.setVisibility(View.VISIBLE);
                 askForTip();
             }
         });
@@ -80,24 +85,46 @@ public class CardsScrollActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_left, R.anim.slideback_right);
     }
 
-    private void resetSize() {
-        TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
-        tipsView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        TextViewCompat.setAutoSizeTextTypeWithDefaults(tipsView, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.show_help) {
+            showHelp();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showHelp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Help");
+        builder.setMessage("SwipeLeft for new card \n" +
+                "SwipeRight for a tip");
+
+        builder.setPositiveButton("Ok", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void askForTip() {
         String tip = currentCycler.askForNextTip();
-        if (tip != null)
+        if (tip != null) {
             appendTipToView(tip);
-        else tellNoMoreTips();
+            fade.reset();
+            cardView.clearAnimation();
+            cardView.startAnimation(fade);
+        } else tellNoMoreTips();
     }
 
     private void appendTipToView(String tip) {
-        tipsBuilder.append('\t');
-        tipsBuilder.append(tip);
-        tipsBuilder.append('\n');
-        tipsView.setText(tipsBuilder.toString());
+        tipsView.setText(tip);
     }
 
     private void tellNoMoreTips() {
@@ -122,7 +149,6 @@ public class CardsScrollActivity extends AppCompatActivity {
 
     private void flushTips() {
         tipsView.setText("");
-        tipsBuilder.setLength(0);
     }
 
     private void updateQuestion() {

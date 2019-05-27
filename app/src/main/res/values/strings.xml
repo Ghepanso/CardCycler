@@ -3,6 +3,7 @@
     <string name="backstab">abc</string>
     <string name="next">Next</string>
     <string name="show_tips">Show tips</string>
+    <string name="help">Help</string>
     <string-array name="card_names">
         <item>Osmin</item>
         <item>Netmin</item>
